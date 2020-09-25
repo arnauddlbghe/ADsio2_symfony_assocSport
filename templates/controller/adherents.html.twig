@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Adherents</h2>
+
+    <p>Nb d'adhérents: {{ lesAdherents|length }}</p>
+    <ul>
+        {% for adherent in lesAdherents %}
+            <li>{{ adherent.nom }} -  {{ adherent.date|date('Y-m-d') }} - <a href=" {{ path('adherent',{ id:adherent.id }) }}">Lien vers l'adhérent</a></li>
+        {% else %}
+            <p>Aucun adhérent trouvé.</p>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
