@@ -15,39 +15,68 @@ class AdherentController extends AbstractController
      */
     public function adherents()
     {
-        // Traitement 
         $repository = $this->getDoctrine()->getRepository(Adherent::class);
-        $lesAdherents = $repository->findAll();
-        
-        /* CREATION D'UN ADHERENT
-        $unAdherent = new Adherent();
-        $unAdherent->setNom("Gertrude");
-        $unAdherent->setDate(new \DateTime("10/10/2000"));
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($unAdherent);
-        $em->flush();
-        */
-        
-        /* MODIFICATION D'UN ADHERENT 
-        $unAdherent = $repository->find(2);
-        $unAdherent->setNom("Jean");
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($unAdherent); // Non obligatoire car fait déjà partie des entités à persister
-        $em->flush();
-        */
+        $lesAdherents = $repository->findAll(); 
 
-        /* SUPPRESION D'UN ADHERENT 
-        $unAdherent = $repository->find(1);
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($unAdherent);
-        $em->flush();
-        */
-
-
-        // Renvoi en view
-        return $this->render('controller/adherents.html.twig', [
+        return $this->render('adherent/adherents.html.twig', [
             'controller_name' => 'ControllerController',
             'lesAdherents' => $lesAdherents,
+        ]);
+    }
+
+    /**
+     * @Route("/adherents/{id}", name="adherentDetails")
+     */
+    public function adherent($id)
+    {
+         $repository = $this->getDoctrine()->getRepository(Adherent::class);
+         $unAdherent = $repository->find($id);
+         
+         return $this->render('adherent/adherent{id}.html.twig', [
+             'adherent' => $unAdherent,
+             ]);
+    }
+
+
+
+    /**
+     * TRAITEMENT SUR UN ADHERENT (+ mise à jour sur la bdd)
+     * Inscription / Modifcation / Suppression
+     */
+
+    /**
+     * @Route("/adherent/inscription", name="adherentInscription")
+     */
+    public function adherentInscription()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        return $this->render('adherent/adherentInscription.html.twig', [
+            'entityManager'=> 'Coucou',
+        ]);
+    }
+
+    /**
+     * @Route("/adherent/modification/{id}", name="adherentModification")
+     */
+    public function adherentModification()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        return $this->render('adherent/adherentModification.html.twig', [
+            'entityManager'=> var_dump($this->getDoctrine()->getManager()),
+        ]);
+    }
+
+    /**
+     * @Route("/adherent/suppression/{id}", name="adherentSuppression")
+     */
+    public function adherentSuppression()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        return $this->render('adherent/adherentSuppression.html.twig', [
+            'entityManager'=> 'Coucou',
         ]);
     }
 }
