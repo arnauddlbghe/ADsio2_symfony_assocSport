@@ -78,12 +78,29 @@ class AdherentController extends AbstractController
     /**
      * @Route("/adherent/modification/{id}", name="adherentModification")
      */
-    public function adherentModification()
+    public function adherentModification(int $id, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $unAdherent = $this->getDoctrine()->getRepository(Adherent::class)->find($id);
 
-        return $this->render('adherent/adherentModification.html.twig', [
-            'entityManager'=> var_dump($this->getDoctrine()->getManager()),
+        $form = $this->createFormBuilder($unAdherent)
+                    ->add('nom',TextType::class, array('label'=>'Nom: '))
+                    ->add('date',DateType::class, array('label'=>'Date de naissance: '))
+                    ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
+                    ->getForm();
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $adherent = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($adherent);
+            $entityManager->flush();
+
+            //Redirection vers la liste des adhérents
+            return $this->redirectToRoute('adherents');
+        }
+
+        return $this->render('adherent/adherentModification{id}.html.twig', [
+            'form'=>$form->createView(),
         ]);
     }
 
@@ -94,7 +111,7 @@ class AdherentController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
 
-        return $this->render('adherent/adherentSuppression.html.twig', [
+        return $this->render('adherent/adherentSuppression{id}.html.twig', [
             'entityManager'=> 'Coucou',
         ]);
     }

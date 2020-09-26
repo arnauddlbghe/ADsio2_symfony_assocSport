@@ -7,12 +7,13 @@
         <thead>
             <tr>
                 <th scope="col" colspan="2">Les adhérents ({{ lesAdherents|length }})</th>
-                <th scope="col" colspan="3" style="text-align:right;"><a href=" {{ path('adherentInscription') }}">Inscrire un nouvel adhérent</a></th>
+                <th scope="col" colspan="4" style="text-align:right;"><a href=" {{ path('adherentInscription') }}">Inscrire un nouvel adhérent</a></th>
             </tr>
         </thead>
         <tbody>
             {% for adherent in lesAdherents %}
                 <tr>
+                    <td>{{ adherent.id }}</td>
                     <td>{{ adherent.nom }}</td>
                     <td>{{ adherent.date|date('Y-m-d') }}</td>
                     <td><a href=" {{ path('adherentDetails',{ id:adherent.id }) }}">Lien vers l'adhérent</a></td>
@@ -24,8 +25,5 @@
             {% endfor %}
         </tbody>
     </table>
-
-
-    </ul>
 
 {% endblock %}

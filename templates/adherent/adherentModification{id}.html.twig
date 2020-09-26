@@ -3,6 +3,8 @@
 {% block body %}
     <h1>MODIFICATION</h1>
 
-    <p>{{ entityManager }}</p>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 
 {% endblock %}
