@@ -107,12 +107,15 @@ class AdherentController extends AbstractController
     /**
      * @Route("/adherent/suppression/{id}", name="adherentSuppression")
      */
-    public function adherentSuppression()
+    public function adherentSuppression(int $id, Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
-
-        return $this->render('adherent/adherentSuppression{id}.html.twig', [
-            'entityManager'=> 'Coucou',
-        ]);
+        $unAdherent = $this->getDoctrine()->getRepository(Adherent::class)->find($id);
+        if ($unAdherent != null) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($unAdherent);
+            $entityManager->flush();
+            
+        }
+        return $this->redirectToRoute('adherents');
     }
 }

@@ -21,7 +21,7 @@
                     <td><a href=" {{ path('adherentSuppression',{ id:adherent.id }) }}">Supprimer l'adhérent</a></td>
                 </tr>
             {% else %}
-                <tr>Aucun adhérents</tr>
+                <tr><td colspan="6">Aucun adhérents</td></tr>
             {% endfor %}
         </tbody>
     </table>
