@@ -5,8 +5,11 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Adherent;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-
+use Symfony\Component\HttpFoundation\Request;
 
 class AdherentController extends AbstractController
 {
@@ -47,12 +50,28 @@ class AdherentController extends AbstractController
     /**
      * @Route("/adherent/inscription", name="adherentInscription")
      */
-    public function adherentInscription()
+    public function adherentInscription(Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+        $adherent= new Adherent();
+        $form = $this->createFormBuilder($adherent)
+                    ->add('nom',TextType::class, array('label'=>'Nom: '))
+                    ->add('date',DateType::class, array('label'=>'Date de naissance: '))
+                    ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
+                    ->getForm();
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $adherent = $form->getData();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($adherent);
+            $entityManager->flush();
+
+            //Redirection vers la liste des adhérents
+            return $this->redirectToRoute('adherents');
+        }
 
         return $this->render('adherent/adherentInscription.html.twig', [
-            'entityManager'=> 'Coucou',
+            'form'=>$form->createView(),
         ]);
     }
 
