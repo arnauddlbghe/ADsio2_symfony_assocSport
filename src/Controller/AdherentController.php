@@ -5,11 +5,8 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Adherent;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
-
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\AdherentType;
 
 class AdherentController extends AbstractController
 {
@@ -53,11 +50,7 @@ class AdherentController extends AbstractController
     public function adherentInscription(Request $request)
     {
         $adherent= new Adherent();
-        $form = $this->createFormBuilder($adherent)
-                    ->add('nom',TextType::class, array('label'=>'Nom: '))
-                    ->add('date',BirthdayType::class, array('label'=>'Date de naissance: '))
-                    ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
-                    ->getForm();
+        $form = $this->createForm(AdherentType::class, $adherent);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
@@ -80,13 +73,8 @@ class AdherentController extends AbstractController
      */
     public function adherentModification(int $id, Request $request)
     {
-        $unAdherent = $this->getDoctrine()->getRepository(Adherent::class)->find($id);
-
-        $form = $this->createFormBuilder($unAdherent)
-                    ->add('nom',TextType::class, array('label'=>'Nom: '))
-                    ->add('date',BirthdayType::class, array('label'=>'Date de naissance: '))
-                    ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
-                    ->getForm();
+        $adherent = $this->getDoctrine()->getRepository(Adherent::class)->find($id);
+        $form = $this->createForm(AdherentType::class, $adherent);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
