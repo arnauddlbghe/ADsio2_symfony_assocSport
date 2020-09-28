@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Adherent;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -55,7 +55,7 @@ class AdherentController extends AbstractController
         $adherent= new Adherent();
         $form = $this->createFormBuilder($adherent)
                     ->add('nom',TextType::class, array('label'=>'Nom: '))
-                    ->add('date',DateType::class, array('label'=>'Date de naissance: '))
+                    ->add('date',BirthdayType::class, array('label'=>'Date de naissance: '))
                     ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
                     ->getForm();
 
@@ -84,7 +84,7 @@ class AdherentController extends AbstractController
 
         $form = $this->createFormBuilder($unAdherent)
                     ->add('nom',TextType::class, array('label'=>'Nom: '))
-                    ->add('date',DateType::class, array('label'=>'Date de naissance: '))
+                    ->add('date',BirthdayType::class, array('label'=>'Date de naissance: '))
                     ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
                     ->getForm();
 
