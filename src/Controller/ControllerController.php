@@ -37,16 +37,6 @@ class ControllerController extends AbstractController
     }
 
     /**
-     * @Route("/categories", name="categories")
-     */
-    public function categories()
-    {
-        return $this->render('controller/categories.html.twig', [
-            'controller_name' => 'ControllerController',
-        ]);
-    }
-
-    /**
      * @Route("/entrainements", name="entrainements")
      */
     public function entrainements()

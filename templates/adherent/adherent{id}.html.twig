@@ -3,6 +3,7 @@
 {% block body %}
     <h2>Adherent {{ adherent.id }}</h2>
     <p>Nom {{ adherent.nom }}</p>
+    <p>Nom {{ adherent.getCategorie().getLibelle() }}</p>
     <p>Date {{ adherent.date|date('Y-m-d') }}</p>
 
 {% endblock %}

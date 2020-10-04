@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Categories</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2">Les categories ({{ lesCategories|length }})</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in lesCategories %}
+                <tr>
+                    <td>{{ categorie.id }}</td>
+                    <td>{{ categorie.libelle }}</td>
+                </tr>
+            {% else %}
+                <tr><td colspan="6">Aucune categories</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

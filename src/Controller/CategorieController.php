@@ -5,15 +5,20 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
+use App\Entity\Categorie;
+
 class CategorieController extends AbstractController
 {
     /**
-     * @Route("/categorie", name="categorie")
+     * @Route("/categories", name="categories")
      */
-    public function index()
+    public function categories()
     {
-        return $this->render('categorie/index.html.twig', [
-            'controller_name' => 'CategorieController',
+        $repository = $this->getDoctrine()->getRepository(Categorie::class);
+        $lesCategories = $repository->findAll(); 
+
+        return $this->render('categorie/categories.html.twig', [
+            'lesCategories' => $lesCategories,
         ]);
     }
 }

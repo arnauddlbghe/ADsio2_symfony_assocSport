@@ -7,7 +7,7 @@
         <thead>
             <tr>
                 <th scope="col" colspan="2">Les adhérents ({{ lesAdherents|length }})</th>
-                <th scope="col" colspan="4" style="text-align:right;"><a href=" {{ path('adherentInscription') }}">Inscrire un nouvel adhérent</a></th>
+                <th scope="col" colspan="5" style="text-align:right;"><a href=" {{ path('adherentInscription') }}">Inscrire un nouvel adhérent</a></th>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +15,7 @@
                 <tr>
                     <td>{{ adherent.id }}</td>
                     <td>{{ adherent.nom }}</td>
+                    <td>{{ adherent.getCategorie().getLibelle() }}</td>
                     <td>{{ adherent.date|date('Y-m-d') }}</td>
                     <td><a href=" {{ path('adherentDetails',{ id:adherent.id }) }}">Lien vers l'adhérent</a></td>
                     <td><a href=" {{ path('adherentModification',{ id:adherent.id }) }}">Modifier l'adhérent</a></td>

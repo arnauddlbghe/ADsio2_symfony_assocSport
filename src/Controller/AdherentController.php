@@ -19,7 +19,6 @@ class AdherentController extends AbstractController
         $lesAdherents = $repository->findAll(); 
 
         return $this->render('adherent/adherents.html.twig', [
-            'controller_name' => 'ControllerController',
             'lesAdherents' => $lesAdherents,
         ]);
     }
