@@ -32,6 +32,16 @@ class Adherent
      */
     private $categorie;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Ville::class)
+     */
+    private $ville;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="adherents")
+     */
+    private $club;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +79,30 @@ class Adherent
     public function setCategorie(?Categorie $categorie): self
     {
         $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    public function getVille(): ?Ville
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?Ville $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getClub(): ?Club
+    {
+        return $this->club;
+    }
+
+    public function setClub(?Club $club): self
+    {
+        $this->club = $club;
 
         return $this;
     }

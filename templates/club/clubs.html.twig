@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Clubs</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" colspan="2">Les clubs ({{ lesClubs|length }})</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for unClub in lesClubs %}
+                <tr>
+                    <td>{{ unClub.id }}</td>
+                    <td>{{ unClub.nom }}</td>
+                </tr>
+                {% for unAdherent in unClub.getAdherents() %}
+                    <tr>
+                        <td>.{{ unAdherent.getId() }}</td>
+                        <td>{{ unAdherent.getNom() }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td></td>
+                        <td>Aucun adhérent dans ce club</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="6">Aucun clubs</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
