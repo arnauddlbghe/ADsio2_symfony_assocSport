@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompetitionRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Competition
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Adherent::class, mappedBy="competition")
+     */
+    private $adherents;
+
+    public function __construct()
+    {
+        $this->adherents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,34 @@ class Competition
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Adherent[]
+     */
+    public function getAdherents(): Collection
+    {
+        return $this->adherents;
+    }
+
+    public function addAdherent(Adherent $adherent): self
+    {
+        if (!$this->adherents->contains($adherent)) {
+            $this->adherents[] = $adherent;
+            $adherent->addCompetition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdherent(Adherent $adherent): self
+    {
+        if ($this->adherents->contains($adherent)) {
+            $this->adherents->removeElement($adherent);
+            $adherent->removeCompetition($this);
+        }
 
         return $this;
     }

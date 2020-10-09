@@ -6,6 +6,7 @@ use App\Entity\Adherent;
 use App\Entity\Categorie;
 use App\Entity\Ville;
 use App\Entity\Club;
+use App\Entity\Competition;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,16 +25,22 @@ class AdherentType extends AbstractType
             ->add('nom',TextType::class, array('label'=>'Nom: '))
             ->add('date',BirthdayType::class, array('label'=>'Date de naissance: '))
             ->add('categorie',EntityType::class, array(
-                'class'=>Categorie::class,          // Nom de la classe
-                'choice_label'=>'libelle')          // Attribut à afficher
+                'class'=>Categorie::class,                      // Nom de la classe
+                'choice_label'=>'libelle')                      // Attribut à afficher
                 )
             ->add('ville',EntityType::class, array(
-                'class'=>Ville::class,          // Nom de la classe
-                'choice_label'=>'libelle')          // Attribut à afficher
+                'class'=>Ville::class,                          // Nom de la classe
+                'choice_label'=>'libelle')                      // Attribut à afficher
                 )
             ->add('club',EntityType::class, array(
-                'class'=>Club::class,          // Nom de la classe
-                'choice_label'=>'nom')          // Attribut à afficher
+                'class'=>Club::class,                           // Nom de la classe
+                'choice_label'=>'nom')                          // Attribut à afficher
+                )
+            ->add('competition',EntityType::class, array(
+                'class'=>Competition::class,                           // Nom de la classe
+                'choice_label'=>'name',                          // Attribut à afficher
+                    'multiple'=>true,
+                    'expanded'=>true)
                 )
             ->add('save', SubmitType::class, array('label'=>'Enregistrer'))
         ;

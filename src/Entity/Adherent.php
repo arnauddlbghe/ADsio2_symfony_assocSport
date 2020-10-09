@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdherentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Adherent
      * @ORM\ManyToOne(targetEntity=Club::class, inversedBy="adherents")
      */
     private $club;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Competition::class, inversedBy="adherents")
+     */
+    private $competition;
+
+    public function __construct()
+    {
+        $this->competition = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,32 @@ class Adherent
     public function setClub(?Club $club): self
     {
         $this->club = $club;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Competition[]
+     */
+    public function getCompetition(): Collection
+    {
+        return $this->competition;
+    }
+
+    public function addCompetition(Competition $competition): self
+    {
+        if (!$this->competition->contains($competition)) {
+            $this->competition[] = $competition;
+        }
+
+        return $this;
+    }
+
+    public function removeCompetition(Competition $competition): self
+    {
+        if ($this->competition->contains($competition)) {
+            $this->competition->removeElement($competition);
+        }
 
         return $this;
     }

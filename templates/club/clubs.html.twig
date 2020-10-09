@@ -6,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col" colspan="2">Les clubs ({{ lesClubs|length }})</th>
+                <th scope="col" colspan="10">Les clubs ({{ lesClubs|length }})</th>
             </tr>
         </thead>
         <tbody>
@@ -17,8 +17,11 @@
                 </tr>
                 {% for unAdherent in unClub.getAdherents() %}
                     <tr>
-                        <td>.{{ unAdherent.getId() }}</td>
-                        <td>{{ unAdherent.getNom() }}</td>
+                        <td></td>
+                        <td>n°{{ unAdherent.getId() }} : {{ unAdherent.getNom() }}</td>
+                        <td><a href=" {{ path('adherentDetails',{ id:unAdherent.id }) }}">Lien vers l'adhérent</a></td>
+                        <td><a href=" {{ path('adherentModification',{ id:unAdherent.id }) }}">Modifier l'adhérent</a></td>
+                        <td><a href=" {{ path('adherentSuppression',{ id:unAdherent.id }) }}">Supprimer l'adhérent</a></td>
                     </tr>
                 {% else %}
                     <tr>
